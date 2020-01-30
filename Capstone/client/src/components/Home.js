@@ -6,6 +6,7 @@ class Home extends Component {
     values: [],
   }
 
+  //Who makes this request - these lines authenitcate
   componentDidMount() {
     const authHeader = createAuthHeaders();
     fetch('/api/v1/values', {
