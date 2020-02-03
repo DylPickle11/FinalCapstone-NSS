@@ -10,14 +10,13 @@ import CheckInCard from './CheckInCard';
     }
 
     componentDidMount() {
-         APIManager.getUserData().then((checkIns) => console.log(checkIns))//{ this.setState({    
-    //             AllCheckIns: checkIns
-    //         })
-    //    })
+         APIManager.getData('CheckIns').then((checkIns) => { this.setState({    
+                AllCheckIns: checkIns
+            })
+       })
         }
 
     render() {
-        
         return (
             <>
                 <div>

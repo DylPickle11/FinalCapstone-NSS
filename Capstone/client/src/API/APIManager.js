@@ -1,24 +1,31 @@
-const remoteUrl = 'http://localhost:5001/api/';
+import {createAuthHeaders} from './userManager';
+const remoteUrl = '/api/';
 
 export default {
-    getUserData() {
-        return fetch(`/api/CheckIns`)
-            .then(response => response.json())
-    },
     getData(resource) {
-        return fetch(`/api/${resource}`)
+        const authHeader = createAuthHeaders()
+        return fetch(`/api/${resource}`,
+        {
+            method: "GET",
+            headers: authHeader
+        })
             .then(response => response.json())
     },
     getSpecificData(resource, id) {
-        return fetch(`/api/${resource}/${id}`)
+        const authHeader = createAuthHeaders()
+        return fetch(`/api/${resource}/${id}`,
+        {
+            method: "GET",
+            headers: authHeader
+        })
             .then(response => response.json())
     },
     postData(resource, newObj) {
+        const authHeader = createAuthHeaders()
          return fetch(`${remoteUrl}${resource}`, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: authHeader,
+
             body: JSON.stringify(newObj)
         }).then(response => response.json())
     },

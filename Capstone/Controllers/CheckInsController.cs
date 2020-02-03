@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -9,33 +8,61 @@ using Capstone.Data;
 using Capstone.Models;
 using Capstone.Models.Data;
 using Microsoft.AspNetCore.Identity;
+using Capstone.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Capstone.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CheckInsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+
+
         public CheckInsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
+
         }
 
         // GET: api/CheckIns
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CheckIn>>> GetCheckIns()
         {
-            return await _context.CheckIns.ToListAsync();
+
+            var userId = HttpContext.GetUserId();
+
+            return await _context.CheckIns
+                .Where(u => u.UserId == userId)
+                .Include(a => a.Attention)
+                .Include(e => e.Emotion)
+                .Include(e => e.Energy)
+                .Include(e => e.Motivation)
+                .Include(e => e.SleepQuality)
+                .Include(e => e.Social)
+                .ToListAsync();
+
+
+
+
         }
 
         // GET: api/CheckIns/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CheckIn>> GetCheckIn(int id)
         {
-            var checkIn = await _context.CheckIns.FindAsync(id);
+            var checkIn = await _context.CheckIns
+                .Include(a => a.Attention)
+                .Include(e => e.Emotion)
+                .Include(e => e.Energy)
+                .Include(e => e.Motivation)
+                .Include(e => e.SleepQuality)
+                .Include(e => e.Social)
+                .SingleOrDefaultAsync(i => i.Id == id);
 
             if (checkIn == null)
             {
@@ -109,5 +136,6 @@ namespace Capstone.Controllers
         {
             return _context.CheckIns.Any(e => e.Id == id);
         }
+
     }
 }

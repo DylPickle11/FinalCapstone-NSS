@@ -9,17 +9,17 @@ namespace Capstone.Controllers.V1
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _userSerice;
+        private readonly IUserService _userService;
 
         public UserController(IUserService userService)
         {
-            _userSerice = userService;
+            _userService = userService;
         }
 
         [HttpPost(Api.User.Register)]
         public async Task<IActionResult> Register([FromBody] UserRegistrationViewModel user)
         {
-            var authResponse = await _userSerice.RegisterUserAsync(user);
+            var authResponse = await _userService.RegisterUserAsync(user);
 
             if (!authResponse.Success)
                 return BadRequest(authResponse);
@@ -30,7 +30,7 @@ namespace Capstone.Controllers.V1
         [HttpPost(Api.User.Login)]
         public async Task<IActionResult> Login([FromBody] UserLoginViewModel user)
         {
-            var authResponse = await _userSerice.LoginAsync(
+            var authResponse = await _userService.LoginAsync(
                 user.Email,
                 user.Password);
 
@@ -43,7 +43,7 @@ namespace Capstone.Controllers.V1
         [HttpPost(Api.User.Refresh)]
         public async Task<IActionResult> Refresh([FromBody] RefreshTokenRequestViewModel refresh)
         {
-            var authResponse = await _userSerice.RefreshTokenAsync(
+            var authResponse = await _userService.RefreshTokenAsync(
                 refresh.Token,
                 refresh.RefreshToken);
 

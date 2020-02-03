@@ -9,29 +9,29 @@ export default class CheckInDetails extends Component {
     }
 
     componentDidMount() {
-        APIManager.getSpecificData("CheckIns", this.props).then((checkIn) => { this.setState({    
+          APIManager.getSpecificData("CheckIns", 1).then((checkIn) =>  { this.setState({    
                 CheckIn: checkIn
             })
        })
         }
 
     render() {
-        console.log(this.props)
+        console.log(this.state.CheckIn.sleepQuality)
         return (
             <>
-            
-                {/* <div>
-                    <p>{this.props.checkIn.dateCreated}</p>
-                    <p>{this.props.checkIn.description}</p>
-                    <p>{this.props.checkIn.sleepQuality.sleepQualityType}</p>
-                    <p>{this.props.checkIn.meal}</p>
-                    <p>{this.props.checkIn.energy.energyType}</p>
-                    <p>{this.props.checkIn.motivation.motivationType}</p>
-                    <p>{this.props.checkIn.attention.attentionType}</p>
-                    <p>{this.props.checkIn.social.socialType}</p>
-                    <p>{this.props.checkIn.exerciseHours}</p>
+            <h1>Hello</h1>
+                <div>
+                    <p>{this.state.CheckIn.dateCreated}</p>
+                    <p>{this.state.CheckIn.description}</p>
+                    {/* <p>{this.state.CheckIn.sleepQuality}</p> */}
+                    <p>{this.state.CheckIn.meal}</p>
+                    {/* <p>{this.state.CheckIn.energy.energyType}</p>
+                    <p>{this.state.CheckIn.motivation.motivationType}</p>
+                    <p>{this.state.CheckIn.attention.attentionType}</p>
+                    <p>{this.state.CheckIn.social.socialType}</p> */}
+                    <p>{this.state.CheckIn.exerciseHours}</p>
                     <button onClick={this.handleDelete}>Remove</button> 
-                </div> */}
+                </div>
             </>
         )
     }

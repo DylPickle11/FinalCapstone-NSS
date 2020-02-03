@@ -226,7 +226,7 @@ namespace Capstone.Services
                     new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                    new Claim("ZipCode", user.ZipCode),
+                    new Claim("zipCode", user.ZipCode),
                     new Claim("id", user.Id)
                 }),
                 Expires = DateTime.UtcNow.Add(_jwtSettings.TokenLifetime),

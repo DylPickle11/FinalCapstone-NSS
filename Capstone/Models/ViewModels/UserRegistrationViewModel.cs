@@ -28,6 +28,7 @@ namespace Capstone.Models.ViewModels
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        [Required]
         [Display(Name = "ZipCode")]
         public string Zipcode { get; set; }
     }

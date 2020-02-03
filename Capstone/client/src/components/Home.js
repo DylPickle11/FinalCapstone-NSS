@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import { createAuthHeaders } from '../API/userManager';
 import ApplicationViews from './ApplicationView';
+import Chart from 'chart.js';
+
 
 class Home extends Component {
   state = {
     values: [],
   }
+ 
 
   //Who makes this request - these lines authenitcate
   componentDidMount() {
     const authHeader = createAuthHeaders();
-    fetch('/api/v1/values', {
+    fetch('api/v1/values', {
       headers: authHeader
     })
       .then(response => response.json())
@@ -20,16 +23,17 @@ class Home extends Component {
   }
 
   render() {
-    console.log(this.state)
+    // var chart = new Chart 
     return (
       <>
       <ApplicationViews {...this.props}/>
         <h1>Welcome to my app</h1>
-        <ul>
+        {/* <canvas id="mychart"></canvas> */}
+        {/* <ul>
           {
             this.state.values.map(value => <li>{value}</li>)
           }
-        </ul>
+        </ul> */}
       </>
     )
   }

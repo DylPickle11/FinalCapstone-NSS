@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import Home from './Home';
 import CheckInList from './CheckIns/CheckInsList';
 import CheckInForm from './CheckIns/CheckInForm';
 import CheckInDetails from './CheckIns/CheckInDetails';
@@ -11,9 +10,6 @@ export default class ApplicationViews extends Component {
 
         return (
             <>
-                <Route exact path='/' render={(props) => {
-                    return <Home {...this.props} />
-                }} />
                 <Route exact path='/CheckIns' render={(props) => {
                     return <CheckInList {...this.props} />
                 }} />
