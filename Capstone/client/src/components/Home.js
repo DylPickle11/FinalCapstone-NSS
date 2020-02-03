@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { createAuthHeaders } from '../API/userManager';
+import ApplicationViews from './ApplicationView';
 
 class Home extends Component {
   state = {
@@ -19,8 +20,10 @@ class Home extends Component {
   }
 
   render() {
+    console.log(this.state)
     return (
       <>
+      <ApplicationViews {...this.props}/>
         <h1>Welcome to my app</h1>
         <ul>
           {

@@ -6,8 +6,10 @@ import Register from './components/Register';
 import Home from './components/Home';
 import { getUser, removeUser } from './API/userManager';
 import './App.css';
+import ApplicationViews from './components/ApplicationView';
 
-class App extends Component {
+
+ export default class App extends Component {
   state = {
     user: getUser(),
   }
@@ -18,10 +20,13 @@ class App extends Component {
   }
 
   render() {
+    
     return (
+    <>
       <div className="App">
-        <Router>
-          <Header user={this.state.user} logout={this.logout} />
+         <Router> 
+          <Header user={this.state.user} logout={this.logout} />  
+               
           <Route exact path="/login" render={() => (
             <Login onLogin={(user) => this.setState({ user })} />
           )} />
@@ -33,10 +38,12 @@ class App extends Component {
               <Home />
             ) : <Redirect to="/login" />
           }} />
-        </Router>
+          <ApplicationViews {...this.state.user} {...this.props}/>
+         </Router> 
       </div>
+      </>
     );
   }
 }
 
-export default App;
+
