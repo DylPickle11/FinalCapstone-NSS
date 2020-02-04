@@ -11,13 +11,13 @@ export default class ApplicationViews extends Component {
         return (
             <>
                 <Route exact path='/CheckIns' render={(props) => {
-                    return <CheckInList {...this.props} />
+                    return <CheckInList {...this.props} {...props} />
                 }} />
                 <Route exact path='/CheckIns/New' render={(props) => {
-                    return <CheckInForm {...this.props} />
+                    return <CheckInForm {...this.props} {...props} />
                 }} />
                 <Route exact path='/CheckIns/:checkInId(\d+)' render={(props) => {
-                    return <CheckInDetails {...this.props} />
+                    return <CheckInDetails {...this.props} {...props} />
                 }} />
 
             </>

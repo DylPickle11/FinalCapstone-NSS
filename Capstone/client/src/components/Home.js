@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { createAuthHeaders } from '../API/userManager';
 import ApplicationViews from './ApplicationView';
 import Chart from 'chart.js';
+import Dashboard from './Dashboard/Dashboard';
 
 
 class Home extends Component {
@@ -28,6 +29,7 @@ class Home extends Component {
       <>
       <ApplicationViews {...this.props}/>
         <h1>Welcome to my app</h1>
+        <Dashboard/>
         {/* <canvas id="mychart"></canvas> */}
         {/* <ul>
           {

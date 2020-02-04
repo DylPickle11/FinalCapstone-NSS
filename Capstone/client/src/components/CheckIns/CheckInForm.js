@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import APIManager from '../../API/APIManager';
+import moment from 'moment'
+//import {Button} from 'semantic-ui-react';
 
 
 
 export default class CheckInForm extends Component {
+     moment = moment().format('MMMM Do YYYY, h:mm:ss a');
     state = {
         userId: this.props.userId,
-        dateCreated: this.props.dateCreated,
         description: "",
         sleepHours: 0,
         sleepQualities: [],
@@ -31,13 +33,18 @@ export default class CheckInForm extends Component {
         this.setState(stateToChange)
     }
 
+    handleNumberfieldChange= evt =>{
+        const stateToChange ={}
+        stateToChange[evt.target.id] = +evt.target.value
+        this.setState(stateToChange)
+    }
+
 
     constructNewCheckIn = evt =>{
         evt.preventDefault();
         const newCheckIn ={
             userId: this.props.userId,
-            dateCreated: this.props.dateCreated,
-            description: "",
+            description: this.state.description,
             sleepHours: this.state.sleepHours,
             sleepQualityId: this.state.sleepQuality,
             meals: this.state.meals,
@@ -48,12 +55,10 @@ export default class CheckInForm extends Component {
             socialId: this.state.social,
             exerciseHours: this.state.exerciseHours
         }
+        alert("You have successfully submitted a CheckIn!")
         APIManager.postData("CheckIns", newCheckIn)
-        console.log(newCheckIn)
+        .then(() => this.props.history.push("/CheckIns"))
     } 
-
-
-
 
     componentDidMount() {
         console.log(this.props)
@@ -93,49 +98,49 @@ export default class CheckInForm extends Component {
                     <form>
                         <textarea row='10' cols='20' placeholder="How was your day?" id="description" onChange={this.handlefieldChange}></textarea>
                         <br />
-                        SleepHours: <input type='number' id="sleepHours" onChange={this.handlefieldChange} />
+                        SleepHours: <input type='number' id="sleepHours" onChange={this.handleNumberfieldChange} />
                         <br />
-                        <select id="sleepQuality" onChange={this.handlefieldChange}>
+                        <select id="sleepQuality" onChange={this.handleNumberfieldChange}>
                             {this.state.sleepQualities.map(sleep =>
                                 <option key={sleep.id} value={sleep.id}>{sleep.sleepQualityType}</option>
                             )}
                         </select>
                         <br />
-                        Meals: <input type='number'  id="meals" onChange={this.handlefieldChange}/>
+                        Meals: <input type='number'  id="meals" onChange={this.handleNumberfieldChange}/>
                         <br/>
-                        <select id="emotion" onChange={this.handlefieldChange}>
+                        <select id="emotion" onChange={this.handleNumberfieldChange}>
                             {this.state.emotions.map(emo =>
                                 <option key={emo.id} value={emo.id}>{emo.emotionType}</option>
                             )}
                         </select>
                         <br />
-                        <select  id="energy" onChange={this.handlefieldChange}>
+                        <select  id="energy" onChange={this.handleNumberfieldChange}>
                             {this.state.energies.map(ener =>
                                 <option key={ener.id} value={ener.id}>{ener.energyType}</option>
                             )}
                         </select>
                         <br />
-                        <select  id="motivation" onChange={this.handlefieldChange}>
+                        <select  id="motivation" onChange={this.handleNumberfieldChange}>
                             {this.state.motivations.map(mot =>
                                 <option key={mot.id} value={mot.id}>{mot.motivationType}</option>
                             )}
                         </select>
                         <br />
-                        <select  id="attention" onChange={this.handlefieldChange}>
+                        <select  id="attention" onChange={this.handleNumberfieldChange}>
                             {this.state.attentions.map(att =>
                                 <option key={att.id} value={att.id}>{att.attentionType}</option>
                             )}
                         </select>
                         <br />
-                        <select  id="social" onChange={this.handlefieldChange}>
+                        <select  id="social" onChange={this.handleNumberfieldChange}>
                             {this.state.socials.map(soc =>
                                 <option key={soc.id} value={soc.id}>{soc.socialType}</option>
                             )}
                         </select>
                         <br />
-                        Exercise Hours: <input type='number'  id="exerciseHours" onChange={this.handlefieldChange}/>
+                        Exercise Hours: <input type='number'  id="exerciseHours" onChange={this.handleNumberfieldChange}/>
                         <br />
-                        <button type="button" onClick={this.constructNewCheckIn}>Submit</button>
+                        <button variant="contained" color="primary" onClick={this.constructNewCheckIn}>Submit</button>
                     </form>
 
                 </div>

@@ -24,9 +24,16 @@ export default {
         const authHeader = createAuthHeaders()
          return fetch(`${remoteUrl}${resource}`, {
             method: "POST",
-            headers: authHeader,
+            body: JSON.stringify(newObj),
+            headers: {
+                ...authHeader,
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              }, 
+            // method: "POST",
+            // headers: authHeader,
 
-            body: JSON.stringify(newObj)
+            // body: JSON.stringify(newObj)
         }).then(response => response.json())
     },
     deleteUserData(resource, Id) {
