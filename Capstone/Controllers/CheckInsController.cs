@@ -10,6 +10,7 @@ using Capstone.Models.Data;
 using Microsoft.AspNetCore.Identity;
 using Capstone.Helpers;
 using Microsoft.AspNetCore.Authorization;
+using System;
 
 namespace Capstone.Controllers
 {
@@ -31,25 +32,41 @@ namespace Capstone.Controllers
 
         // GET: api/CheckIns
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CheckIn>>> GetCheckIns()
+        public async Task<ActionResult<IEnumerable<CheckIn>>> GetCheckIns([FromQuery]bool week)
         {
-
             var userId = HttpContext.GetUserId();
+            if (week == true)
+            {
+                //var date = DateTime.Now;
+                //DateTime SundayOfLastWeek = date.AddDays(-int)date.DayOfWeek -6
+                DateTime dt = DateTime.Now.StartOfWeek(DayOfWeek.Sunday);
 
-            return await _context.CheckIns
-                .Where(u => u.UserId == userId)
-                .Include(a => a.Attention)
-                .Include(e => e.Emotion)
-                .Include(e => e.Energy)
-                .Include(e => e.Motivation)
-                .Include(e => e.SleepQuality)
-                .Include(e => e.Social)
-                .ToListAsync();
-
-
-
+                return await _context.CheckIns
+                    .Where(u => u.UserId == userId && u.DateCreated >= dt)
+                    .Include(a => a.Attention)
+                    .Include(e => e.Emotion)
+                    .Include(e => e.Energy)
+                    .Include(e => e.Motivation)
+                    .Include(e => e.SleepQuality)
+                    .Include(e => e.Social)
+                    .ToListAsync();
+            }
+            else
+            {
+                return await _context.CheckIns
+                    .Where(u => u.UserId == userId)
+                    .Include(a => a.Attention)
+                    .Include(e => e.Emotion)
+                    .Include(e => e.Energy)
+                    .Include(e => e.Motivation)
+                    .Include(e => e.SleepQuality)
+                    .Include(e => e.Social)
+                    .ToListAsync();
+            }
 
         }
+
+
 
         // GET: api/CheckIns/5
         [HttpGet("{id}")]
@@ -136,6 +153,12 @@ namespace Capstone.Controllers
         {
             return _context.CheckIns.Any(e => e.Id == id);
         }
+
+        //private DateTime StartOfWeek(this DateTime dt, DayOfWeek startOfWeek)
+        //{
+        //    int diff = (7 + (dt.DayOfWeek - startOfWeek)) % 7;
+        //    return dt.AddDays(-1 * diff).Date;
+        //}
 
     }
 }

@@ -11,6 +11,15 @@ export default {
         })
             .then(response => response.json())
     },
+    getWeekData(resource) {
+        const authHeader = createAuthHeaders()
+        return fetch(`/api/${resource}?week=true`,
+        {
+            method: "GET",
+            headers: authHeader
+        })
+            .then(response => response.json())
+    },
     getSpecificData(resource, id) {
         const authHeader = createAuthHeaders()
         return fetch(`/api/${resource}/${id}`,

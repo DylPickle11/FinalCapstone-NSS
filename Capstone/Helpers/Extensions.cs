@@ -14,5 +14,12 @@ namespace Capstone.Helpers
 
             return httpContext.User.Claims.Single(c => c.Type == "id").Value;
         }
+
+        public static DateTime StartOfWeek(this DateTime dt, DayOfWeek startOfWeek)
+        {
+            int diff = (7 + (dt.DayOfWeek - startOfWeek)) % 7;
+            return dt.AddDays(-1 * diff).Date;
+        }
+
     }
 }

@@ -13,8 +13,16 @@ import SocialChart from '../Charts/SocialChart';
 
 
 export default class Dashboard extends Component {
+    state = {
+        WeekCheckIns:[]
+    }
 
-    // Grab DAta
+    componentDidMount() {
+        APIManager.getWeekData('CheckIns').then((checkIns) => { this.setState({    
+               WeekCheckIns: checkIns
+           })
+      })
+       }
     // Server set Date
     // Use Moments.js or backEnd?
     //Pass properties to each chart
@@ -22,6 +30,7 @@ export default class Dashboard extends Component {
 
 
     render() {
+        console.log(this.state)
         return (
             <>
             <SleepChart/>
