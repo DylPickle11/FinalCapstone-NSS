@@ -17,7 +17,6 @@ export default class CheckInDetails extends Component {
     }
 
     render() {
-        console.log(this.state.CheckIn)
         return (
             <>
                 <h1>Hello</h1>

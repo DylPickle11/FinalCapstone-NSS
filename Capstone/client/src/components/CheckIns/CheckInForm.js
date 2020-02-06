@@ -61,7 +61,6 @@ export default class CheckInForm extends Component {
     } 
 
     componentDidMount() {
-        console.log(this.props)
         let sleepQualities = [];
         let emotions = [];
         let energies = [];
