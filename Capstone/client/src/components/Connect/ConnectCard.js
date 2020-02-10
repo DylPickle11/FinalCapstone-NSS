@@ -9,6 +9,18 @@ export default class CheckInCard extends Component {
      APIManager.deleteUserData("CheckIns", this.props.checkIn.id)  
  }
 
+ save = () => {
+    let savedTherapist = {
+        userId: this.props.userId,
+        therapistId: this.props.therapist.id
+    }
+    alert("You have successfully saved a Therapist!")
+    APIManager.postData("TherapistUsers", savedTherapist)
+    .then(() => this.props.history.push("/Connect"))    
+
+
+}
+
     render() {
         return (
             <>
@@ -20,7 +32,7 @@ export default class CheckInCard extends Component {
                     <p>{this.props.therapist.state}</p>
                     <p>{this.props.therapist.zipCode}</p>
                     <p>{this.props.therapist.phone}</p>
-                   <button onClick={this.save}>Save</button>
+                    <button id="save" onClick={this.save}>Save</button>
                     {/* <Link to={`/CheckIns/${this.props.checkIn.id}`}><button>Details</button></Link> */}
                     {/* <button onClick={this.handleDelete}>Remove</button>  */}
                 </div>

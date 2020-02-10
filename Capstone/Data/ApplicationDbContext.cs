@@ -25,10 +25,15 @@ namespace Capstone.Data
         public DbSet<SleepQuality> SleepQualities { get; set; }
         public DbSet<Social> Socials { get; set; }
         public DbSet<Therapist> Therapists { get; set; }
+        public DbSet<TherapistUser> TherapistUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<CheckIn>()
+                .Property(c => c.DateCreated)
+                .HasDefaultValueSql("GETDATE()");
 
             //Create Attention
 
@@ -245,13 +250,13 @@ namespace Capstone.Data
                 State = "Tennessee",
                 ZipCode = "37209",
                 Phone = "(615)560-8728",
-               
+
 
             };
             //therapist1.Specialities.Add("Trauma and PTSD");
             //therapist1.Specialities.Add("Relationship Issues");
             //therapist1.Specialities.Add("Anxiety");
- 
+
             modelBuilder.Entity<Therapist>().HasData(therapist1);
 
             Therapist therapist2 = new Therapist
@@ -264,7 +269,7 @@ namespace Capstone.Data
                 State = "Tennessee",
                 ZipCode = "37203",
                 Phone = "(615)645-2458"
-               
+
 
             };
             //therapist2.Specialities.Add("Self Esteem");
@@ -489,8 +494,28 @@ namespace Capstone.Data
             //therapist15.Specialities.Add("Trauma and PTSD");
             modelBuilder.Entity<Therapist>().HasData(therapist15);
 
+
+            TherapistUser TU1 = new TherapistUser
+            {
+                Id = 1,
+                TherapistId = 2,
+                UserId = "3c72d6e7-76c3-415d-8900-6b6189d179a0"
+            };
+
+            modelBuilder.Entity<TherapistUser>().HasData(TU1);
+           
+            TherapistUser TU2 = new TherapistUser
+            {
+                Id = 2,
+                TherapistId = 5,
+                UserId = "3c72d6e7-76c3-415d-8900-6b6189d179a0"
+            };
+
+            modelBuilder.Entity<TherapistUser>().HasData(TU2);
         }
 
     }
 }
+
+
 

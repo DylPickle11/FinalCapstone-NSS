@@ -4,14 +4,16 @@ using Capstone.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Capstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200210232721_TherapistUsers")]
+    partial class TherapistUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,7 +124,7 @@ namespace Capstone.Migrations
                         {
                             Id = 1,
                             AttentionId = 3,
-                            DateCreated = new DateTime(2020, 2, 10, 17, 30, 49, 44, DateTimeKind.Local).AddTicks(8030),
+                            DateCreated = new DateTime(2020, 2, 10, 17, 27, 21, 130, DateTimeKind.Local).AddTicks(2848),
                             Description = "First Test Check In, Can't wait to see you on the other side!",
                             EmotionId = 3,
                             EnergyId = 2,
