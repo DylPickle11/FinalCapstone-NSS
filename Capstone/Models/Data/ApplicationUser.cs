@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace Capstone.Models.Data
 {
     // ******************* 
@@ -16,5 +17,7 @@ namespace Capstone.Models.Data
         public string LastName { get; set; }
         public string StreetAddress { get; set; }
         public string ZipCode { get; set; }
+
+        public virtual ICollection<Therapist> Therapists { get; set; }
     }
 }

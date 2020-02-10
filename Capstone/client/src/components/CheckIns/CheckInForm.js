@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import APIManager from '../../API/APIManager';
 import moment from 'moment'
-//import {Button} from 'semantic-ui-react';
+import {Button} from 'semantic-ui-react';
 
 
 
 export default class CheckInForm extends Component {
-     moment = moment().format('MMMM Do YYYY, h:mm:ss a');
+     moment = moment().format("DD-MM-YYYY, hh:mm:ss a");
     state = {
         userId: this.props.userId,
+        dateCreated: this.moment,
         description: "",
         sleepHours: 0,
         sleepQualities: [],
-        sleepQualityId: 0,
         meals: 0,
         emotions: [],
         sleepQualityId: 0,
@@ -44,6 +44,7 @@ export default class CheckInForm extends Component {
         evt.preventDefault();
         const newCheckIn ={
             userId: this.props.userId,
+            dateCreated: this.state.DateCreated,
             description: this.state.description,
             sleepHours: this.state.sleepHours,
             sleepQualityId: this.state.sleepQuality,
@@ -139,7 +140,7 @@ export default class CheckInForm extends Component {
                         <br />
                         Exercise Hours: <input type='number'  id="exerciseHours" onChange={this.handleNumberfieldChange}/>
                         <br />
-                        <button variant="contained" color="primary" onClick={this.constructNewCheckIn}>Submit</button>
+                        <Button basic color="teal" onClick={this.constructNewCheckIn}>Submit</Button>
                     </form>
 
                 </div>

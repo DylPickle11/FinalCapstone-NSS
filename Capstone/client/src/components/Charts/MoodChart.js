@@ -1,38 +1,38 @@
 import React, { Component } from 'react';
-import Chart from 'chart.js';
-//import classes from "./LineGraph.module.css";
+import { Pie } from 'react-chartjs-2';
 
 
 
 export default class MoodChart extends Component {
-    chartRef = React.createRef();
-    
-    componentDidMount() {
-        const myChartRef = this.chartRef.current.getContext("2d");
-        
-        new Chart(myChartRef, {
-            type: "doughnut",
-            data: {
-                //Bring in data
-                labels: ["Jan", "Feb", "March"],
-                datasets: [
-                    {
-                        label: "Sales",
-                        data: [86, 67, 91],
-                    }
-                ]
-            },
-            options: {
-                //Customize chart options
-            }
-        });
-    }
     render() {
+        const HappyCount =  this.props.emotion.filter(e => e === "Happy").length
+        const SensitiveCount =  this.props.emotion.filter(e => e === "Sensitive").length
+        const SadCount =  this.props.emotion.filter(e => e === "Sad").length
+        const FrustratedCount =  this.props.emotion.filter(e => e === "Frustrated").length
+        
+        const data = {
+            
+            labels: ["Happy", "Sensitive", "Sad", "Frustrated"],
+            datasets: [
+                {
+                    label: "Moods for the Week",
+                    data: [HappyCount, SensitiveCount, SadCount, FrustratedCount],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)'
+                    ],
+                }
+            ]
+        }
         return (
             <div >
-                <canvas
-                    id="myChart"
-                    ref={this.chartRef}
+                <Pie
+                    data={data}
+                    width={150}
+                    height={150}
+                //options={{ maintainAspectRatio: false }}
                 />
             </div>
         )

@@ -1,39 +1,33 @@
 import React, { Component } from 'react';
-import Chart from 'chart.js';
-//import classes from "./LineGraph.module.css";
+import { Bar } from 'react-chartjs-2';
 
 
 
 export default class ExerciseChart extends Component {
-    chartRef = React.createRef();
-    
-    componentDidMount() {
-        const myChartRef = this.chartRef.current.getContext("2d");
-        
-        new Chart(myChartRef, {
-            type: "bar",
-            data: {
-                //Bring in data
-                labels: ["Jan", "Feb", "March"],
-                datasets: [
-                    {
-                        label: "Sales",
-                        data: [86, 67, 91],
-                    }
-                ]
-            },
-            options: {
-                //Customize chart options
-            }
-        });
-    }
     render() {
-        console.log(this.state)
+
+        const data = {
+            labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            datasets: [
+                {
+                    label: "Amount of Exercise",
+                    data: this.props.exercise,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)'
+                    ],
+                }
+            ]
+        }
         return (
             <div >
-                <canvas
-                    id="myChart"
-                    ref={this.chartRef}
+                <Bar
+                    data={data}
+                    width={150}
+                    height={150}
+                //options={{ maintainAspectRatio: false }}
                 />
             </div>
         )

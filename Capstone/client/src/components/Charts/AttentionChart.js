@@ -1,38 +1,31 @@
 import React, { Component } from 'react';
-import Chart from 'chart.js';
-//import classes from "./LineGraph.module.css";
-
+import { Bar } from 'react-chartjs-2';
 
 
 export default class AttentionChart extends Component {
-    chartRef = React.createRef();
-    
-    componentDidMount() {
-        const myChartRef = this.chartRef.current.getContext("2d");
-        
-        new Chart(myChartRef, {
-            type: "pie",
-            data: {
-                //Bring in data
-                labels: ["Jan", "Feb", "March"],
-                datasets: [
-                    {
-                        label: "Sales",
-                        data: [86, 67, 91],
-                    }
-                ]
-            },
-            options: {
-                //Customize chart options
-            }
-        });
-    }
     render() {
+        const FocusCount =  this.props.attention.filter(e => e === "Focused").length
+        const DistractCount =  this.props.attention.filter(e => e === "Distracted").length
+        const CalmCount =  this.props.attention.filter(e => e === "Calm").length
+        const StressCount =  this.props.attention.filter(e => e === "Stressed").length
+
+        const data = {
+            
+            labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            datasets: [
+                {
+                    label: "Attention",
+                    data: [FocusCount, DistractCount, CalmCount, StressCount]
+                }
+            ]
+        }
         return (
             <div >
-                <canvas
-                    id="myChart"
-                    ref={this.chartRef}
+                <Bar
+                    data={data}
+                    width={150}
+                    height={150}
+                //options={{ maintainAspectRatio: false }}
                 />
             </div>
         )

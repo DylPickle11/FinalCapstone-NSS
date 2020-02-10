@@ -1,53 +1,38 @@
 import React, { Component } from 'react';
-import Chart from 'chart.js';
-import APIManager from '../../API/APIManager';
-//import classes from "./LineGraph.module.css";
+import { Pie } from 'react-chartjs-2';
 
 
 
-export default class SocialChart extends Component {
-    state = {
-        WeekCheckIns:[]
-    }
-
-    componentDidMount() {
-        APIManager.getWeekData('CheckIns').then((checkIns) => { this.setState({    
-               WeekCheckIns: checkIns
-           })
-      })
-       }
-    chartRef = React.createRef();
-    
-    componentDidMount() {
-        const myChartRef = this.chartRef.current.getContext("2d");
-        APIManager.getWeekData('CheckIns').then((checkIns) => { this.setState({    
-            WeekCheckIns: checkIns
-        })
-   })
-        
-        new Chart(myChartRef, {
-            type: "pie",
-            data: {
-                //Bring in data
-                labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-                datasets: [
-                    {
-                        label: "Sales",
-                        data: [86, 67, 91],
-                    }
-                ]
-            },
-            options: {
-                //Customize chart options
-            }
-        });
-    }
+export default class MoodChart extends Component {
     render() {
+        const ConflictCount =  this.props.social.filter(e => e === "Conflict").length
+        const SupportiveCount =  this.props.social.filter(e => e === "Supportive").length
+        const SociableCount =  this.props.social.filter(e => e === "Sociable").length
+        const WithdrawnCount =  this.props.social.filter(e => e === "Withdrawn").length
+        
+        const data = {
+            
+            labels: ["Conflict", "Supportive", "Sociable", "Withdrawn"],
+            datasets: [
+                {
+                    label: "Social",
+                    data: [ConflictCount, SupportiveCount, SociableCount, WithdrawnCount],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)'
+                    ],
+                }
+            ]
+        }
         return (
             <div >
-                <canvas
-                    id="myChart"
-                    ref={this.chartRef}
+                <Pie
+                    data={data}
+                    width={150}
+                    height={150}
+                //options={{ maintainAspectRatio: false }}
                 />
             </div>
         )

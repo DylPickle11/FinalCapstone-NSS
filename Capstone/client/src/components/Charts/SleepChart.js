@@ -1,43 +1,28 @@
 import React, { Component } from 'react';
-import APIManager from '../../API/APIManager';
-import Chart from 'chart.js';
-//import classes from "./LineGraph.module.css";
+import { Bar } from 'react-chartjs-2';
+
 
 
 
 export default class SleepChart extends Component {
-  
-    chartRef = React.createRef();
-    componentDidMount() {
-        const myChartRef = this.chartRef.current.getContext("2d");
-        let data = this.props.sleepHours
-        console.log(this.props.sleepHours)
-        new Chart(myChartRef, {
-            type: "bar",
-            data: {
-                //Bring in data
-                labels: ["Monday", "Tuesday", "Wednesday"],
-                datasets: [
-                    {
-                        label: "Sleep",
-                        data: data, 
-                    }
-                ]
-            },
-            options: {
-                //Customize chart options
-            }
-        });
-    }
-    
     render() {
-        console.log(this.props.sleepHours)
+
+        const data = {
+            labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            datasets: [
+                {
+                    label: "Sleep Hours",
+                    data: this.props.sleepHours,
+                }
+            ]
+        }
         return (
             <div >
-                <canvas
-                    id="myChart"
-                    ref={this.chartRef}
-
+                <Bar
+                    data={data}
+                    width={150}
+                    height={150}
+                //options={{ maintainAspectRatio: false }}
                 />
             </div>
         )

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import APIManager from '../../API/APIManager';
 import SleepChart from '../Charts/SleepChart';
 import AttentionChart from '../Charts/AttentionChart';
@@ -9,6 +8,7 @@ import MoodChart from '../Charts/MoodChart';
 import MotivationChart from '../Charts/MotivationChart';
 import SleepQualityChart from '../Charts/SleepQualityChart';
 import SocialChart from '../Charts/SocialChart';
+import { Grid } from 'semantic-ui-react';
 
 
 
@@ -39,6 +39,7 @@ export default class Dashboard extends Component {
         let exerciseHours = [];
 
         APIManager.getWeekData('CheckIns').then(checkIns => {
+
             singlecheckIns = checkIns
 
             sleepHours = singlecheckIns.map(checkins => {
@@ -68,54 +69,58 @@ export default class Dashboard extends Component {
             exerciseHours = singlecheckIns.map(checkins => {
                 return checkins.exerciseHours
             });
-            //return true).then(()=>{
-
-            //})
-            /// Promise . All
-            // this.setState({
-            //     singlecheckIns: singlecheckIns,
-            //     sleepHours: sleepHours,
-            //     sleepQualities: sleepQualities,
-            //     meals: meals,
-            //     emotions: emotions,
-            //     energies: energies,
-            //     motviations: motivations,
-            //     attentions: attentions,
-            //     socials: socials,
-            //     exerciseHours: exerciseHours
-            // })
-        })       
+            // Promise . All
+            this.setState({
+                singlecheckIns: singlecheckIns,
+                sleepHours: sleepHours,
+                sleepQualities: sleepQualities,
+                meals: meals,
+                emotions: emotions,
+                energies: energies,
+                motviations: motivations,
+                attentions: attentions,
+                socials: socials,
+                exerciseHours: exerciseHours
+            })
+        })
     }
 
     render() {
-        console.log(this.state.sleepHours)
         return (
             <>
-                {/* {(this.state.singlecheckIns.id) ? */}
-                <div>
-                    <SleepChart sleepHours={this.state.sleepHours} />
-                    {/* {this.state.attentions.map(attention => (
-                            <AttentionChart />
-                        ))}
-                        {this.state.energies.map(energy => (
-                            <EnergyChart />
-                        ))} */}
-                    {this.state.exerciseHours.map(exercise => (
-                        <ExerciseChart key={exercise.id} exercise={exercise} {...this.props} />
-                    ))}
-                    {/* {this.state.emotions.map(emotion => (
-                            <MoodChart />
-                        ))}
-                        {this.state.motivations.map(motivation => (
-                            <MotivationChart />
-                        ))}
-                        {this.state.sleepQualities.map(sleepQuality => (
-                            <SleepQualityChart />
-                        ))}
-                        {this.state.social.map(social => (
-                            <SocialChart />
-                        ))} */}
-                </div>
+                <Grid>
+                    <Grid.Row columns={3}>
+                        <Grid.Column>
+                            <SleepChart sleepHours={this.state.sleepHours} />
+                        </Grid.Column>
+                        <Grid.Column>
+                            <AttentionChart attention={this.state.attentions} />
+                        </Grid.Column>
+                        <Grid.Column>
+                            <EnergyChart energy={this.state.energies} />
+                        </Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row columns={2}>
+                        <Grid.Column>
+                            <MoodChart emotion={this.state.emotions} />
+                        </Grid.Column>
+                        <Grid.Column>
+                            <SocialChart social={this.state.socials} />
+                        </Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row columns={3}>
+                        <Grid.Column>
+                            <MotivationChart motivation={this.state.motivations} />
+                        </Grid.Column>
+                        <Grid.Column>
+                            <SleepQualityChart sleepQuality={this.state.sleepQualities} />
+                        </Grid.Column>
+                        <Grid.Column>
+                            <ExerciseChart exercise={this.state.exerciseHours} />
+                        </Grid.Column>
+                    </Grid.Row>
+
+                </Grid>
                 {/* : <h3>Getting the Details</h3>} */}
             </>
         )

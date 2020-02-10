@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { createAuthHeaders } from '../API/userManager';
 import ApplicationViews from './ApplicationView';
-import Chart from 'chart.js';
 import Dashboard from './Dashboard/Dashboard';
 
 
@@ -9,7 +8,7 @@ class Home extends Component {
   state = {
     values: [],
   }
- 
+
 
   //Who makes this request - these lines authenitcate
   componentDidMount() {
@@ -24,21 +23,17 @@ class Home extends Component {
   }
 
   render() {
-    // var chart = new Chart 
+
     return (
       <>
-      <ApplicationViews {...this.props}/>
-        <h1>Welcome to my app</h1>
-        <Dashboard/>
-        {/* <canvas id="mychart"></canvas> */}
-        {/* <ul>
-          {
-            this.state.values.map(value => <li>{value}</li>)
-          }
-        </ul> */}
+        <ApplicationViews {...this.props} />
+         <img src={require('../Images/TherAPPiLogo.png')}/>
+          <h1>Your Week</h1>
+          <Dashboard />
+      
       </>
-    )
-  }
-}
-
+        )
+      }
+    }
+    
 export default Home;
