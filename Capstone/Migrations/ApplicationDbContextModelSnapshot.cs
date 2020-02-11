@@ -122,7 +122,7 @@ namespace Capstone.Migrations
                         {
                             Id = 1,
                             AttentionId = 3,
-                            DateCreated = new DateTime(2020, 2, 10, 17, 30, 49, 44, DateTimeKind.Local).AddTicks(8030),
+                            DateCreated = new DateTime(2020, 2, 10, 17, 55, 39, 568, DateTimeKind.Local).AddTicks(152),
                             Description = "First Test Check In, Can't wait to see you on the other side!",
                             EmotionId = 3,
                             EnergyId = 2,
@@ -211,6 +211,27 @@ namespace Capstone.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "3c72d6e7-76c3-415d-8900-6b6189d179a0",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "d76015b8-2d29-4698-a0a4-3f5333b1a0ae",
+                            Email = "admin@admin.com",
+                            EmailConfirmed = true,
+                            FirstName = "admin",
+                            LastName = "admin",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@ADMIN.COM",
+                            NormalizedUserName = "ADMIN@ADMIN.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAED3MV8bzV54VoDC0U08pMOWkwfaqjO42G5xcjttFAYxpjeZZmnlqOasn5+UXdvPZLg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
+                            StreetAddress = "123 Infinity Way",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@admin.com"
+                        });
                 });
 
             modelBuilder.Entity("Capstone.Models.Data.RefreshToken", b =>
@@ -608,7 +629,7 @@ namespace Capstone.Migrations
                             Name = "Nichelle Foster",
                             Phone = "(844)296-4820",
                             State = "Tennessee",
-                            Title = "Pre- icensed Professional MMFT",
+                            Title = "Pre-licensed Professional MMFT",
                             ZipCode = "37209"
                         },
                         new

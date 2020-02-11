@@ -35,7 +35,24 @@ namespace Capstone.Data
                 .Property(c => c.DateCreated)
                 .HasDefaultValueSql("GETDATE()");
 
-            //Create Attention
+            ApplicationUser user = new ApplicationUser
+            {
+                FirstName = "admin",
+                LastName = "admin",
+                StreetAddress = "123 Infinity Way",
+                UserName = "admin@admin.com",
+                NormalizedUserName = "ADMIN@ADMIN.COM",
+                Email = "admin@admin.com",
+                NormalizedEmail = "ADMIN@ADMIN.COM",
+                EmailConfirmed = true,
+                LockoutEnabled = false,
+                SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
+                Id = "3c72d6e7-76c3-415d-8900-6b6189d179a0"
+
+            };
+            var passwordHash = new PasswordHasher<ApplicationUser>();
+            user.PasswordHash = passwordHash.HashPassword(user, "Admin8*");
+            modelBuilder.Entity<ApplicationUser>().HasData(user);
 
             Attention attention1 = new Attention
             {
@@ -428,7 +445,7 @@ namespace Capstone.Data
             {
                 Id = 12,
                 Name = "Nichelle Foster",
-                Title = "Pre- icensed Professional MMFT",
+                Title = "Pre-licensed Professional MMFT",
                 Address = "Care-N-Concern Counseling",
                 City = "Nashville",
                 State = "Tennessee",
@@ -503,7 +520,7 @@ namespace Capstone.Data
             };
 
             modelBuilder.Entity<TherapistUser>().HasData(TU1);
-           
+
             TherapistUser TU2 = new TherapistUser
             {
                 Id = 2,

@@ -39,10 +39,7 @@ export default {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
               }, 
-            // method: "POST",
-            // headers: authHeader,
-
-            // body: JSON.stringify(newObj)
+            
         }).then(response => response.json())
     },
     deleteUserData(resource, Id) {

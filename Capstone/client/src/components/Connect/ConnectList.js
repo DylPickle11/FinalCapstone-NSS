@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ConnectCard from './ConnectCard';
+import ConnectPreferenceCard from './ConnectPreferenceCard';
 import APIManager from "../../API/APIManager";
 import { Input, Grid, Image } from 'semantic-ui-react';
 
@@ -7,7 +8,8 @@ import { Input, Grid, Image } from 'semantic-ui-react';
 export default class ConnectList extends Component {
     state = {
         AllTherapists: [],
-        AllMatches: []
+        AllMatches: [],
+        SavedTherapists: []
     }
     search = () => {
         let searchInput = document.getElementById("search")
@@ -26,15 +28,20 @@ export default class ConnectList extends Component {
     }
 
     componentDidMount() {
-        APIManager.getData('Therapists').then((therapists) => {
-            this.setState({
-                AllTherapists: therapists
+        let therapists = []
+        APIManager.getData('Therapists')
+            .then((therapist => { therapists = therapist }))
+            .then(() => APIManager.getData('TherapistUsers'))
+            .then(TheUse => {
+                this.setState({
+                    AllTherapists: therapists,
+                    SavedTherapists: TheUse
+                })
             })
-        })
     }
 
     render() {
-        console.log(this.state.AllMatches)
+        console.log(this.state.SavedTherapists)
         return (
             <>
                 <div>
@@ -47,7 +54,7 @@ export default class ConnectList extends Component {
                     <Grid columns={3} divided>
                         <Grid.Row>
                             <Grid.Column>
-                                <Image src={require('../../Images/cat.png')}/>
+                                <Image src={require('../../Images/cat.png')} />
                                 {this.state.AllTherapists.map(therapist => (
                                     <ConnectCard key={therapist.id} therapist={therapist} {...this.props} />
                                 ))}
@@ -63,12 +70,15 @@ export default class ConnectList extends Component {
                             </Grid.Column>
                             <Grid.Column>
                                 <Image src={require('../../Images/cat.png')} />
+                                {this.state.SavedTherapists.map(therapist => (
+                                    <ConnectPreferenceCard key={therapist.id} therapist={therapist} {...this.props} />
+                                ))}
                             </Grid.Column>
                         </Grid.Row>
-                        </Grid>
+                    </Grid>
 
                 </div>
             </>
-                )
-            }
+        )
+    }
 }
