@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ConnectCard from './ConnectCard';
 import ConnectPreferenceCard from './ConnectPreferenceCard';
 import APIManager from "../../API/APIManager";
-import { Input, Grid, Image } from 'semantic-ui-react';
+import { Input, Grid, Card, Header, Segment } from 'semantic-ui-react';
 
 
 export default class ConnectList extends Component {
@@ -11,20 +11,27 @@ export default class ConnectList extends Component {
         AllMatches: [],
         SavedTherapists: []
     }
+
+    handleKeyPress = (event) => {
+        if (event.key === "Enter") {
+            this.search();
+        }
+    }
+
     search = () => {
         let searchInput = document.getElementById("search")
         let inputValue = searchInput.value
         let therapistMatches = [];
-        console.log(therapistMatches)
+
         this.state.AllTherapists.map(therapist => {
-            console.log(therapist)
             if (therapist.zipCode === inputValue) {
                 therapistMatches.push(therapist);
             }
         })
         this.setState({
-            AllMatches: therapistMatches
+            AllTherapists: therapistMatches
         })
+        inputValue = "";
     }
 
     componentDidMount() {
@@ -41,43 +48,40 @@ export default class ConnectList extends Component {
     }
 
     render() {
-        console.log(this.state.SavedTherapists)
+
         return (
             <>
-                <div>
-                    <h1>Connect</h1>
-                    <div className="ui icon input">
-                        <Input type="text" id="search" placeholder="Search..." />
-                        <i aria-hidden="true" className="search icon"></i>
-                        <button type="submit" onClick={this.search}>Search</button>
-                    </div>
-                    <Grid columns={3} divided>
-                        <Grid.Row>
-                            <Grid.Column>
-                                <Image src={require('../../Images/cat.png')} />
-                                {this.state.AllTherapists.map(therapist => (
-                                    <ConnectCard key={therapist.id} therapist={therapist} {...this.props} />
-                                ))}
-
-
-                            </Grid.Column>
-
-                            <Grid.Column>
-                                <Image src={require('../../Images/cat.png')} />
-                                {this.state.AllMatches.map(therapist => (
-                                    <ConnectCard key={therapist.id} therapist={therapist} {...this.props} />
-                                ))}
-                            </Grid.Column>
-                            <Grid.Column>
-                                <Image src={require('../../Images/cat.png')} />
+                <Header as='h2'>Connect</Header>
+                <Grid>
+                    <Grid.Row>
+                        <Grid.Column>
+                            <Header as='h2'>SavedTherapists</Header>
+                            <Card.Group>
                                 {this.state.SavedTherapists.map(therapist => (
                                     <ConnectPreferenceCard key={therapist.id} therapist={therapist} {...this.props} />
                                 ))}
-                            </Grid.Column>
-                        </Grid.Row>
-                    </Grid>
+                            </Card.Group>
+                        </Grid.Column>
+                    </Grid.Row>   
+                    <div className="searchDiv">
+                    <Segment inverted>    
+                        <Input type="text" size="large" id="search" placeholder="Zipcode...Find a Therapist in your area"
+                            onKeyPress={this.handleKeyPress} 
+                            focus />    
+                            </Segment> 
+                            </div> 
+                    <Grid.Row>
+                        <Grid.Column>
+                            <Header as='h2'>Nashville Therapists</Header>
+                            <Card.Group>
+                                {this.state.AllTherapists.map(therapist => (
+                                    <ConnectCard key={therapist.id} therapist={therapist} {...this.props} />
+                                ))}
+                            </Card.Group>
 
-                </div>
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
             </>
         )
     }

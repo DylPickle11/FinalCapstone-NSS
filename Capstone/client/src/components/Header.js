@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function Header(props) {
   return (
-    <nav className="header">
+    <nav className="navheader">
       <ul className="nav-items">
         {
           props.user ? (

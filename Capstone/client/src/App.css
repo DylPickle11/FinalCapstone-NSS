@@ -2,7 +2,7 @@
   text-align: center;
 }
 
-.header {
+.navheader {
   background-color: #282c34;
   display: flex;
   flex-direction: row;
@@ -35,4 +35,9 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+.searchDiv {
+  text-align: center;
+  color:green;
 }

@@ -1,28 +1,32 @@
 import React, { Component } from 'react';
 import APIManager from '../../API/APIManager';
+import { Button, Card } from 'semantic-ui-react'
 
 
 
 export default class CheckInCard extends Component {
  handleDelete = () => {
-     APIManager.deleteUserData("CheckIns", this.props.checkIn.id)  
+     APIManager.deleteUserData("TherapistUsers", this.props.therapist.id)  
+     .then(() => this.props.history.push("/Connect"))
  }
     render() {
-        console.log(this.props.therapist)
         return (
             <>
-                <div>
-                    <p>{this.props.therapist.therapist.name}</p>
-                    <p>{this.props.therapist.therapist.title}</p>
-                    <p>{this.props.therapist.therapist.address}</p>
-                    <p>{this.props.therapist.therapist.city}</p>
-                    <p>{this.props.therapist.therapist.state}</p>
-                    <p>{this.props.therapist.therapist.zipCode}</p>
-                    <p>{this.props.therapist.therapist.phone}</p>
-                     <button onClick={this.handleDelete}>Remove</button> 
-                    {/* <Link to={`/CheckIns/${this.props.checkIn.id}`}><button>Details</button></Link> */}
-                    
-                </div>
+             <Card>
+                    <Card.Content>
+                        <i className="circular red right floated heart icon" ></i> 
+                        <Card.Header>{this.props.therapist.therapist.name}</Card.Header>
+                        <Card.Meta>{this.props.therapist.therapist.title}</Card.Meta>
+                        <Card.Description>{this.props.therapist.therapist.address}</Card.Description>
+                        <Card.Description>{this.props.therapist.therapist.city}</Card.Description>
+                        <Card.Description>{this.props.therapist.therapist.state}</Card.Description>
+                        <Card.Description>{this.props.therapist.therapist.zipCode}</Card.Description>
+                        <Card.Description>{this.props.therapist.therapist.phone}</Card.Description>
+                    </Card.Content>
+                    <Card.Content extra>
+                        <Button id="remove" basic color='red' onClick={this.handleDelete}>Remove</Button>
+                    </Card.Content>
+                </Card>         
             </>
         )
     }
