@@ -51,7 +51,7 @@ export default class ConnectList extends Component {
 
         return (
             <>
-                <Header as='h2'>Connect</Header>
+                <Header as='h1'>Connect</Header>
                 <Grid>
                     <Grid.Row>
                         <Grid.Column>
@@ -62,14 +62,16 @@ export default class ConnectList extends Component {
                                 ))}
                             </Card.Group>
                         </Grid.Column>
-                    </Grid.Row>   
-                    <div className="searchDiv">
-                    <Segment inverted>    
-                        <Input type="text" size="large" id="search" placeholder="Zipcode...Find a Therapist in your area"
-                            onKeyPress={this.handleKeyPress} 
-                            focus />    
-                            </Segment> 
-                            </div> 
+                    </Grid.Row>
+                    <br/>
+                    <div className="search">
+                        <Segment inverted>
+                            <Input type="text" size="large" id="search" placeholder="Zipcode...Find a Therapist in your area"
+                                onKeyPress={this.handleKeyPress}
+                                focus />
+                        </Segment>
+                    </div>
+                    <br/>
                     <Grid.Row>
                         <Grid.Column>
                             <Header as='h2'>Nashville Therapists</Header>
@@ -78,7 +80,6 @@ export default class ConnectList extends Component {
                                     <ConnectCard key={therapist.id} therapist={therapist} {...this.props} />
                                 ))}
                             </Card.Group>
-
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>

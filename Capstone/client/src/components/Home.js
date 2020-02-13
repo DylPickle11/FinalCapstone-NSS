@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { createAuthHeaders } from '../API/userManager';
-import ApplicationViews from './ApplicationView';
 import Dashboard from './Dashboard/Dashboard';
 
 
@@ -25,8 +24,7 @@ class Home extends Component {
   render() {
 
     return (
-      <>
-        <ApplicationViews {...this.props} />
+      <>  
          <img src={require('../Images/TherAPPiLogo.png')}/>
           <h1>Your Week</h1>
           <Dashboard />

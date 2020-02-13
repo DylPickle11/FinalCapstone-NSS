@@ -4,6 +4,7 @@ import { Line } from 'react-chartjs-2';
 
 
 export default class MotivationChart extends Component {
+    
     render() {
         const MotivatedCount =  this.props.motivation.filter(e => e === "Motivated").length
         const UnMotivatedCount =  this.props.motivation.filter(e => e === "Unmotivated").length

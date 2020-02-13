@@ -30,10 +30,10 @@ namespace Capstone.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TherapistUser>>> GetTherapistUsers()
         {
-           // var userId = HttpContext.GetUserId();
+            var userId = HttpContext.GetUserId();
 
             return await _context.TherapistUsers
-                .Where(u => u.UserId == "3c72d6e7-76c3-415d-8900-6b6189d179a0")
+                .Where(u => u.UserId == userId)
                 .Include(t => t.Therapist)
                 .ToListAsync();
         }

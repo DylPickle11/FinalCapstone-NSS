@@ -77,7 +77,7 @@ export default class Dashboard extends Component {
                 meals: meals,
                 emotions: emotions,
                 energies: energies,
-                motviations: motivations,
+                motivations: motivations,
                 attentions: attentions,
                 socials: socials,
                 exerciseHours: exerciseHours
@@ -86,6 +86,7 @@ export default class Dashboard extends Component {
     }
 
     render() {
+    
         return (
             <>
                 <Grid>

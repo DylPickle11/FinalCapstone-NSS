@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import APIManager from '../../API/APIManager';
-import moment from 'moment'
-import {Button} from 'semantic-ui-react';
+import { Button, Header, Form, Dropdown, Input, Message, Grid, GridRow } from 'semantic-ui-react';
 
 
 
 export default class CheckInForm extends Component {
-     moment = moment().format("DD-MM-YYYY, hh:mm:ss a");
+
     state = {
         userId: this.props.userId,
         dateCreated: this.moment,
@@ -15,7 +14,7 @@ export default class CheckInForm extends Component {
         sleepQualities: [],
         meals: 0,
         emotions: [],
-        sleepQualityId: 0,
+        sleepQualityId: "",
         energies: [],
         energyId: 0,
         motivations: [],
@@ -27,39 +26,36 @@ export default class CheckInForm extends Component {
         exerciseHours: 0
     }
 
-    handlefieldChange= evt =>{
-        const stateToChange ={}
+    handlefieldChange = evt => {
+        const stateToChange = {}
         stateToChange[evt.target.id] = evt.target.value
         this.setState(stateToChange)
     }
-
-    handleNumberfieldChange= evt =>{
-        const stateToChange ={}
-        stateToChange[evt.target.id] = +evt.target.value
-        this.setState(stateToChange)
-    }
+    
+    handleNumberfieldChange = (evt,{ id, value}) => { this.setState({[id]: +value})}
 
 
-    constructNewCheckIn = evt =>{
+    constructNewCheckIn = evt => {
+ 
         evt.preventDefault();
-        const newCheckIn ={
+        const newCheckIn = {
             userId: this.props.userId,
             dateCreated: this.state.DateCreated,
             description: this.state.description,
             sleepHours: this.state.sleepHours,
-            sleepQualityId: this.state.sleepQuality,
+            sleepQualityId: this.state.sleepQualityId,
             meals: this.state.meals,
-            emotionId: this.state.emotion,
-            energyId: this.state.energy,
-            motivationId: this.state.motivation,
-            attentionId: this.state.attention,
-            socialId: this.state.social,
+            emotionId: this.state.emotionId,
+            energyId: this.state.energyId,
+            motivationId: this.state.motivationId,
+            attentionId: this.state.attentionId,
+            socialId: this.state.socialId,
             exerciseHours: this.state.exerciseHours
         }
         alert("You have successfully submitted a CheckIn!")
         APIManager.postData("CheckIns", newCheckIn)
-        .then(() => this.props.history.push("/CheckIns"))
-    } 
+            .then(() => this.props.history.push("/CheckIns"))
+    }
 
     componentDidMount() {
         let sleepQualities = [];
@@ -67,6 +63,7 @@ export default class CheckInForm extends Component {
         let energies = [];
         let motivations = [];
         let attentions = [];
+        let socials = [];
 
         APIManager.getData('SleepQualities')
             .then((sleep => { sleepQualities = sleep }))
@@ -79,71 +76,143 @@ export default class CheckInForm extends Component {
             .then(() => APIManager.getData('Attentions'))
             .then((attention => { attentions = attention }))
             .then(() => APIManager.getData('Socials'))
-            .then(social => {
+            .then((social => {socials = social }))
+            .then(()=> {
                 this.setState({
                     sleepQualities: sleepQualities,
                     emotions: emotions,
                     energies: energies,
                     motivations: motivations,
                     attentions: attentions,
-                    socials: social
+                    socials: socials
                 })
             })
     }
+
+    sleepQuality = () => {
+        let sleepOption = []
+        this.state.sleepQualities.map(sleep => {
+            let sleepObj = {key: sleep.id.toString(), text: sleep.sleepQualityType, value: sleep.id }
+            sleepOption.push(sleepObj)
+        })
+       
+        return sleepOption
+    }
+    emotion = () => {
+        let emotionOption = []
+        this.state.emotions.map(emotion => {
+            let emotionObj = { key: emotion.id, text: emotion.emotionType, value: emotion.id }
+            emotionOption.push(emotionObj)
+        })
+        return emotionOption
+    }
+    energy = () => {
+        let energyOption = []
+        this.state.energies.map(energy => {
+            let energyObj = { key: energy.id, text: energy.energyType, value: energy.id }
+            energyOption.push(energyObj)
+        })
+        return energyOption
+    }
+    motivation = () => {
+        let motivationOption = []
+        this.state.motivations.map(motivation => {
+            let motivationObj = { key: motivation.id, text: motivation.motivationType, value: motivation.id }
+            motivationOption.push(motivationObj)
+        })
+        return motivationOption
+    }
+    attention = () => {
+        let attentionOption = []
+        this.state.attentions.map(attention => {
+            let attentionObj = { key: attention.id, text: attention.attentionType, value: attention.id }
+            attentionOption.push(attentionObj)
+        })
+        return attentionOption
+    }
+    social = () => {
+        let socialOption = []
+        this.state.socials.map(social => {
+            let socialObj = { key: social.id, text: social.socialType, value: social.id }
+            socialOption.push(socialObj)
+          
+        })
+        return socialOption
+    }
+
     render() {
         return (
             <>
-                <div>
-                    <h1>CheckIn</h1>
-                    <form>
-                        <textarea row='10' cols='20' placeholder="How was your day?" id="description" onChange={this.handlefieldChange}></textarea>
-                        <br />
-                        SleepHours: <input type='number' id="sleepHours" onChange={this.handleNumberfieldChange} />
-                        <br />
-                        <select id="sleepQuality" onChange={this.handleNumberfieldChange}>
-                            {this.state.sleepQualities.map(sleep =>
-                                <option key={sleep.id} value={sleep.id}>{sleep.sleepQualityType}</option>
-                            )}
-                        </select>
-                        <br />
-                        Meals: <input type='number'  id="meals" onChange={this.handleNumberfieldChange}/>
-                        <br/>
-                        <select id="emotion" onChange={this.handleNumberfieldChange}>
-                            {this.state.emotions.map(emo =>
-                                <option key={emo.id} value={emo.id}>{emo.emotionType}</option>
-                            )}
-                        </select>
-                        <br />
-                        <select  id="energy" onChange={this.handleNumberfieldChange}>
-                            {this.state.energies.map(ener =>
-                                <option key={ener.id} value={ener.id}>{ener.energyType}</option>
-                            )}
-                        </select>
-                        <br />
-                        <select  id="motivation" onChange={this.handleNumberfieldChange}>
-                            {this.state.motivations.map(mot =>
-                                <option key={mot.id} value={mot.id}>{mot.motivationType}</option>
-                            )}
-                        </select>
-                        <br />
-                        <select  id="attention" onChange={this.handleNumberfieldChange}>
-                            {this.state.attentions.map(att =>
-                                <option key={att.id} value={att.id}>{att.attentionType}</option>
-                            )}
-                        </select>
-                        <br />
-                        <select  id="social" onChange={this.handleNumberfieldChange}>
-                            {this.state.socials.map(soc =>
-                                <option key={soc.id} value={soc.id}>{soc.socialType}</option>
-                            )}
-                        </select>
-                        <br />
-                        Exercise Hours: <input type='number'  id="exerciseHours" onChange={this.handleNumberfieldChange}/>
-                        <br />
-                        <Button basic color="teal" onClick={this.constructNewCheckIn}>Submit</Button>
-                    </form>
+                <Header as='h1'>CheckIn</Header>
+                <Form className='formContainer'>
+                   
+                <div className="description">
+                        <Form.Field className="ten wide field">
+                            <label>Day Description</label>
+                            <textarea row='10' cols='20' placeholder="Tell us about your day?" className="description" onChange={this.handlefieldChange}></textarea>
+                        </Form.Field>
+                   </div>
+                        <Grid columns={3}>
+                        <Grid.Row>
+                            <Grid.Column>
+                                <Form.Field className="eleven wide field">
+                                    <label>Sleep Hours</label>
+                                    <Input type='number' placeholder="sleepHours" id="sleepHours" onChange={this.handleNumberfieldChange} />
+                                </Form.Field>
+                                <Form.Field className="ten wide field">
+                                    <label>Sleep Quality</label>
+                                    <Dropdown selection placeholder="Sleep Quality" id="sleepQualityId" name='sleepQualityId' onChange={this.handleNumberfieldChange} options={this.sleepQuality()} />
+                                </Form.Field>
+                                <Form.Field className="ten wide field">
+                                    <label>Emotion</label>
+                                    <Dropdown selection placeholder="Emotion" id="emotionId" onChange={this.handleNumberfieldChange} options={this.emotion()} />
+                                </Form.Field>
+                            </Grid.Column>
+                        
 
-                </div>
+
+                        <Grid.Column>
+                         
+                                <Form.Field className="ten wide field">
+                                    <label>Energy Level</label>
+                                    <Dropdown selection placeholder="Energy Level" id="energyId" onChange={this.handleNumberfieldChange} options={this.energy()} />
+                                </Form.Field>
+                           
+                         
+                                <Form.Field className="ten wide field">
+                                    <label>Motivation Level</label>
+                                    <Dropdown selection placeholder="Motivation" id="motivationId" onChange={this.handleNumberfieldChange} options={this.motivation()} />
+                                </Form.Field>
+                        
+                      
+                                <Form.Field className="ten wide field">
+                                    <label>Attention Level</label>
+                                    <Dropdown selection placeholder="Attention" id="attentionId" onChange={this.handleNumberfieldChange} options={this.attention()} />
+                                </Form.Field>
+                       
+                        </Grid.Column>
+
+                        <Grid.Column> 
+                            <Form.Field className="ten wide field">
+                                <label>Social Level</label>
+                                <Dropdown selection placeholder="Social" id="socialId" onChange={this.handleNumberfieldChange} options={this.social()} />
+                            </Form.Field>
+                            <Form.Field className="eleven wide field">
+                                <label>Amount of Meals</label>
+                                <Input type='number' placeholder="" id="meals" onChange={this.handleNumberfieldChange} />
+                            </Form.Field>
+                            <Form.Field className="eleven wide field">
+                                <label>Exercise Hours</label>
+                                <Input type='number' placeholder="Exercise Hours" id="exerciseHours" onChange={this.handleNumberfieldChange} />
+                            </Form.Field>
+                            </Grid.Column>
+                            <div className="button">   
+                            <Button className="button" basic color="purple" size="medium" onClick={this.constructNewCheckIn}>Submit</Button>
+                            </div>
+                        </Grid.Row>
+                        
+                    </Grid>
+                </Form>
             </>
         )
     }

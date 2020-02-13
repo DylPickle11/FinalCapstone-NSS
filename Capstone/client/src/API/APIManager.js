@@ -47,5 +47,12 @@ export default {
             method: "DELETE"
         })
             .then(response => response.json())
+    },
+    getQuotes(){
+        const authHeader = createAuthHeaders()
+        return fetch("http://quotes.rest/qod.json", {
+            method: "GET"
+        })
+        .then(response => response.json())
     }
 }
